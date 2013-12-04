@@ -24,14 +24,14 @@ func main() {
 }
 
 func buildMux() *http.ServeMux {
-	assets, err := getAssetsPath()
+	frontend, err := getFrontendPath()
 	if err != nil {
-		panic(fmt.Sprintf("Error getting assets path using go command: %s\n", err))
+		panic(fmt.Sprintf("Error getting frontend path using go command: %s\n", err))
 	}
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/sign", handleSign)
 	mux.HandleFunc("/api/count", handleCount)
-	mux.Handle("/", http.FileServer(http.Dir(assets)))
+	mux.Handle("/", http.FileServer(http.Dir(frontend)))
 	return mux
 }
 

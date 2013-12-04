@@ -16,10 +16,10 @@ func getRootPath() (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-func getAssetsPath() (string, error) {
+func getFrontendPath() (string, error) {
 	root, err := getRootPath()
 	if err != nil {
 		return "", err
 	}
-	return path.Join(root, "assets"), nil
+	return path.Join(root, "frontend/_site"), nil
 }
