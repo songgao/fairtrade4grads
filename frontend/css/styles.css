@@ -1,3 +1,7 @@
-#main {
-    padding-top: 48;
+.push_down {
+    padding-top: 128px;
+}
+
+.push_down_a_little {
+    padding-top: 48px;
 }
