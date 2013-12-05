@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const pkgImportPath = "github.com/songgao/petition"
+const pkgImportPath = "github.com/songgao/fairtrade4grads"
 
 func getRootPath() (string, error) {
 	out, err := exec.Command("go", "list", "-f", "{{.Dir}}", pkgImportPath).Output()
