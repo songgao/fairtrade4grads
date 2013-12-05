@@ -12,6 +12,7 @@ import (
 type Signature struct {
 	Name       string `json:"name"`
 	AUUsername string `json:"au_username"`
+	RemoteAddr string
 }
 
 var fDev bool
@@ -31,6 +32,7 @@ func buildMux() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/sign", handleSign)
 	mux.HandleFunc("/api/count", handleCount)
+	mux.HandleFunc("/api/list", handleList)
 	mux.Handle("/", http.FileServer(http.Dir(frontend)))
 	return mux
 }
@@ -41,6 +43,7 @@ func handleSign(rsp http.ResponseWriter, req *http.Request) {
 	} else {
 		var sig *Signature
 		json.NewDecoder(req.Body).Decode(&sig)
+		sig.RemoteAddr = req.RemoteAddr
 		newSignature(sig)
 		rsp.WriteHeader(http.StatusOK)
 	}
@@ -56,5 +59,14 @@ func handleCount(rsp http.ResponseWriter, req *http.Request) {
 		} else {
 			io.WriteString(rsp, strconv.Itoa(count))
 		}
+	}
+}
+
+func handleList(rsp http.ResponseWriter, req *http.Request) {
+	if req.Method != "GET" {
+		rsp.WriteHeader(http.StatusBadRequest)
+	} else {
+		names := getNames()
+		json.NewEncoder(rsp).Encode(names)
 	}
 }

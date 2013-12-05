@@ -63,3 +63,16 @@ func getCount() (int, error) {
 	c, err := db.C("Signatures").Count()
 	return c, err
 }
+
+func getNames() []string {
+	session := mgoSession.Clone()
+	defer session.Close()
+	db := getDB(session)
+	it := db.C("Signatures").Find(nil).Iter()
+	var sig Signature
+	ret := make([]string, 0)
+	for it.Next(&sig) {
+		ret = append(ret, sig.Name)
+	}
+	return ret
+}
