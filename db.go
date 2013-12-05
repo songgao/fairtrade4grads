@@ -3,17 +3,18 @@ package main
 import (
 	"flag"
 	"fmt"
-	"labix.org/v2/mgo"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"labix.org/v2/mgo"
 )
 
 var mgoSession *mgo.Session
 
 func init() {
 	flag.BoolVar(&fDev, "dev", false, "Dev environment; set this if not in production")
-	flag.StringVar(&fLaddr, "laddr", "localhost:8765", "Address to listen on")
+	flag.StringVar(&fLaddr, "laddr", ":8765", "Address to listen on")
 }
 
 func init_DB() {

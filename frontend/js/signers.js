@@ -1,4 +1,4 @@
-var ctl = function() { return this; };
+var ctl = function() { };
 
 ctl.prototype.getNames = function() {
     var self = this;
