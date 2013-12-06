@@ -39,13 +39,18 @@ func buildMux() *http.ServeMux {
 
 func handleSign(rsp http.ResponseWriter, req *http.Request) {
 	if req.Method != "POST" {
+		fmt.Printf("%s not POST\n", req.Method)
 		rsp.WriteHeader(http.StatusBadRequest)
 	} else {
 		var sig *Signature
 		json.NewDecoder(req.Body).Decode(&sig)
-		sig.RemoteAddr = req.RemoteAddr
-		newSignature(sig)
-		rsp.WriteHeader(http.StatusOK)
+		if sig.Name == "" && sig.AUUsername == "" {
+			rsp.WriteHeader(http.StatusBadRequest)
+		} else {
+			sig.RemoteAddr = req.RemoteAddr
+			newSignature(sig)
+			rsp.WriteHeader(http.StatusOK)
+		}
 	}
 }
 

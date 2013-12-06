@@ -7,8 +7,8 @@ ctl.prototype.sign = function() {
         'au_username': $('#input_username').val()
     };
     $('#btn_sign').text('Sending Request...');
-    $('button').prop('disabled', true);
     $.post( '/api/sign', JSON.stringify(signature), ctl.prototype.sign_successful.bind(self));
+    $('button').prop('disabled', true);
 };
 
 ctl.prototype.sign_successful = function() {
